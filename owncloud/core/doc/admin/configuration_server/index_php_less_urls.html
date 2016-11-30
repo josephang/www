@@ -144,13 +144,15 @@
 (e.g. <a class="reference external" href="https://example.com/apps/files/">https://example.com/apps/files/</a> instead of <a class="reference external" href="https://example.com/index.php/apps/files/">https://example.com/index.php/apps/files/</a>).
 The following documentation provides the needed steps to configure this for the <code class="docutils literal"><span class="pre">Apache</span></code>
 Web server. These steps are not necessary when using nginx as a web server because it is already
-enabled in the <a class="reference internal" href="../installation/nginx_owncloud_9x.html"><em>Nginx Configuration for the ownCloud 9.x Branches</em></a>.</p>
+enabled in the <a class="reference internal" href="../installation/nginx_examples.html"><em>nginx Example Configurations</em></a>.</p>
 <div class="section" id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>Before being able to use index.php-less URLs you need to enable the <code class="docutils literal"><span class="pre">mod_rewrite</span></code> and
 <code class="docutils literal"><span class="pre">mod_env</span></code> Apache modules. Furthermore a configured <code class="docutils literal"><span class="pre">AllowOverride</span> <span class="pre">All</span></code> directive
 within the vhost of your Web server is needed. Please have a look at the <code class="docutils literal"><span class="pre">Apache</span></code> manual
 for how to enable and configure these.</p>
+<p>Furthermore these instructions are only working when using Apache together with the <code class="docutils literal"><span class="pre">mod_php</span></code>
+Apache module for PHP. Other modules like <code class="docutils literal"><span class="pre">php-fpm</span></code> or <code class="docutils literal"><span class="pre">mod_fastcgi</span></code> are unsupported.</p>
 </div>
 <div class="section" id="configuration-steps">
 <h2>Configuration steps<a class="headerlink" href="#configuration-steps" title="Permalink to this headline">¶</a></h2>

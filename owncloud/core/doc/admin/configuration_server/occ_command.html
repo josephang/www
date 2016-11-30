@@ -530,10 +530,6 @@ migrate addressbooks from 8.2 when you upgrade to 9.0:</p>
 <div class="highlight-python"><div class="highlight"><pre>dav
  dav:create-addressbook        Create a dav addressbook
  dav:create-calendar           Create a dav calendar
- dav:migrate-addressbooks      Migrate addressbooks from the contacts
-                               app to core
- dav:migrate-calendars         Migrate calendars from the calendar app to
-                               core
  dav:sync-birthday-calendar    Synchronizes the birthday calendar
  dav:sync-system-addressbook   Synchronizes users to the system
                                addressbook
@@ -1025,13 +1021,13 @@ change to existing files.</p>
 <p class="last">This command is only available when the &#8220;Deleted files&#8221; app
 (<code class="docutils literal"><span class="pre">files_trashbin</span></code>) is enabled.</p>
 </div>
-<p>The <code class="docutils literal"><span class="pre">trashbin:cleanup</span></code> command removes the deleted files of the specified
-users in a space-delimited list, or all users if none are specified.</p>
 <div class="highlight-python"><div class="highlight"><pre>trashbin
  trashbin:cleanup   Remove deleted files
+ trashbin:expire    Expires the users trashbin
 </pre></div>
 </div>
-<p>This example removes the deleted files of all users:</p>
+<p>The <code class="docutils literal"><span class="pre">trashbin:cleanup</span></code> command removes the deleted files of the specified
+users in a space-delimited list, or all users if none are specified. This example removes all the deleted files of all users:</p>
 <div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ trashbin:cleanup
 Remove all deleted files
 Remove deleted files for users on backend Database
@@ -1048,6 +1044,7 @@ Remove deleted files of   molly
 Remove deleted files of   freda
 </pre></div>
 </div>
+<p><code class="docutils literal"><span class="pre">trashbin:expire</span></code> deletes only expired files according to the <code class="docutils literal"><span class="pre">trashbin_retention_obligation</span></code> setting in <code class="docutils literal"><span class="pre">config.php</span></code> (see the Deleted Files section in <a class="reference internal" href="config_sample_php_parameters.html"><em>Config.php Parameters</em></a>). The default is to delete expired files for all users, or you may list users in a space-delimited list.</p>
 </div>
 <div class="section" id="user-commands">
 <span id="user-commands-label"></span><h2>User Commands<a class="headerlink" href="#user-commands" title="Permalink to this headline">¶</a></h2>
@@ -1146,13 +1143,13 @@ authentication servers such as LDAP:</p>
 <p class="last">This command is only available when the &#8220;Versions&#8221; app (<code class="docutils literal"><span class="pre">files_versions</span></code>) is
 enabled.</p>
 </div>
-<p>Use this command to delete file versions for specific users, or for all users
-when none are specified:</p>
 <div class="highlight-python"><div class="highlight"><pre>versions
  versions:cleanup   Delete versions
+ versions:expire    Expires the users file versions
 </pre></div>
 </div>
-<p>This example deletes all versions for all users:</p>
+<p>Use <code class="docutils literal"><span class="pre">versions:cleanup</span></code> to delete all older file versions for specific users (keeping the most recent versions), or for all users when none are specified.</p>
+<p>This example deletes all files versions for all users, except the most recent versions:</p>
 <div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ versions:cleanup
 Delete all versions
 Delete versions for users on backend Database
@@ -1164,11 +1161,12 @@ Delete versions for users on backend Database
 </pre></div>
 </div>
 <p>You can delete versions for specific users in a space-delimited list:</p>
-<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ versions:cleanup
+<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ versions:cleanup freda molly
 Delete versions of   freda
 Delete versions of   molly
 </pre></div>
 </div>
+<p><code class="docutils literal"><span class="pre">versions:expire</span></code> Deletes only expired files according to the <code class="docutils literal"><span class="pre">versions_retention_obligation</span></code> setting in <code class="docutils literal"><span class="pre">config.php</span></code> (see the File versions section in <a class="reference internal" href="config_sample_php_parameters.html"><em>Config.php Parameters</em></a>). The default is to delete expired files for all users, or you may list users in a space-delimited list.</p>
 </div>
 <div class="section" id="command-line-installation">
 <span id="command-line-installation-label"></span><h2>Command Line Installation<a class="headerlink" href="#command-line-installation" title="Permalink to this headline">¶</a></h2>

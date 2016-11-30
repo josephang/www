@@ -1,7 +1,7 @@
 <?php 
-$OC_Version = array(9,1,1,3);
-$OC_VersionString = '9.1.1';
+$OC_Version = array(9,1,2,5);
+$OC_VersionString = '9.1.2';
 $OC_Edition = '';
 $OC_Channel = 'stable';
 $OC_VersionCanBeUpgradedFrom = array(9,0);
-$OC_Build = '2016-09-19T17:05:48+00:00 5cc7dd8922747b1626213640461818991360edb1';
+$OC_Build = '2016-11-08T10:54:28+00:00 d47c589b0429eafa5add3a9ffc1c89f8ecccf9cc';

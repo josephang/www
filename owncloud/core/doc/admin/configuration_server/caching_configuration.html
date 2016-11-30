@@ -189,7 +189,7 @@ of memcache that best fits your needs. The supported caching backends are:</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><a class="reference external" href="http://redis.io/">Redis</a>, PHP module 2.2.5 and up required.</dt>
+<dt><a class="reference external" href="http://redis.io/">Redis</a>, PHP module 2.2.6 and up required.</dt>
 <dd><p class="first last">For distributed caching.</p>
 </dd>
 </dl>
@@ -282,7 +282,7 @@ servers in the shared cache pool with their port numbers:</p>
 <p>Redis is an excellent modern memcache to use for both distributed caching, and
 as a local cache for <a class="reference internal" href="../configuration_files/files_locking_transactional.html"><em>Transactional File Locking</em></a> because it guarantees
 that cached objects are available for as long as they are needed.</p>
-<p>The Redis PHP module must be version 2.2.5+. If you are running a Linux
+<p>The Redis PHP module must be version 2.2.6+. If you are running a Linux
 distribution that does not package the supported versions of this module, or
 does not package Redis at all, see <a class="reference internal" href="#install-redis-label"><span>Additional Redis Installation Help</span></a>.</p>
 <p>On Debian/Ubuntu/Mint install <code class="docutils literal"><span class="pre">redis-server</span></code> and <code class="docutils literal"><span class="pre">php5-redis</span></code>. The installer
@@ -351,12 +351,13 @@ current user. You may use the <code class="docutils literal"><span class="pre">'
 </div>
 <div class="section" id="large-organization-clustered-setup">
 <h3>Large Organization, Clustered Setup<a class="headerlink" href="#large-organization-clustered-setup" title="Permalink to this headline">¶</a></h3>
-<p>Use Redis for everything except local memcache:</p>
+<p>Use Redis for everything except local memcache. Use the server&#8217;s IP address or hostname so that it is accessible to other hosts:</p>
 <div class="highlight-python"><div class="highlight"><pre>&#39;memcache.distributed&#39; =&gt; &#39;\OC\Memcache\Redis&#39;,
 &#39;memcache.locking&#39; =&gt; &#39;\OC\Memcache\Redis&#39;,
 &#39;memcache.local&#39; =&gt; &#39;\OC\Memcache\APCu&#39;,
 &#39;redis&#39; =&gt; array(
-     &#39;host&#39; =&gt; &#39;localhost&#39;,
+     &#39;host&#39; =&gt; &#39;server1&#39;,  //hostname example
+     &#39;host&#39; =&gt; &#39;12.34.56.78&#39;,  //IP address example
      &#39;port&#39; =&gt; 6379,
       ),
 </pre></div>
@@ -375,12 +376,7 @@ and Redis for File Locking. If you are low on memory, use Redis for both.</p>
 These instructions are adaptable for any distro that does not package the
 supported version, or that does not package Redis at all, such as SUSE Linux
 Enterprise Server and Red Hat Enterprise Linux.</p>
-<p>The Redis PHP module must be at least version 2.2.5. Please note that
-the Redis PHP module versions 2.2.5 - 2.2.7 will only work for:</p>
-<div class="highlight-python"><div class="highlight"><pre>PHP version 6.0.0 or older
-PHP version 5.2.0 or newer
-</pre></div>
-</div>
+<p>The Redis PHP module must be at least version 2.2.6.</p>
 <p>See <a class="reference external" href="https://pecl.php.net/package/redis">https://pecl.php.net/package/redis</a></p>
 <p>On Debian/Mint/Ubuntu, use <code class="docutils literal"><span class="pre">apt-cache</span></code> to see the available
 <code class="docutils literal"><span class="pre">php5-redis</span></code> version, or the version of your installed package:</p>

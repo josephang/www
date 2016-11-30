@@ -83,6 +83,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting-web-server-and-php-problems">Troubleshooting Web server and PHP problems</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting-webdav">Troubleshooting WebDAV</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting-contacts-calendar">Troubleshooting Contacts &amp; Calendar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#client-sync-stalls">Client Sync Stalls</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#other-issues">Other issues</a></li>
 </ul>
 </li>
@@ -362,7 +363,7 @@ running ownCloud at the document root of your Web server the correct URL is:</p>
 <p>For the first case the <code class="file docutils literal"><span class="pre">.htaccess</span></code> file shipped with ownCloud should do
 this work for your when running Apache. You only need to make sure that your
 Web server is using this file. When running NGINX please refer to
-<a class="reference internal" href="../installation/nginx_examples.html"><em>Nginx Example Configurations</em></a>.</p>
+<a class="reference internal" href="../installation/nginx_examples.html"><em>nginx Example Configurations</em></a>.</p>
 <p>If your ownCloud instance is installed in a subfolder called <code class="docutils literal"><span class="pre">owncloud</span></code> and
 you&#8217;re running Apache create or edit the <code class="file docutils literal"><span class="pre">.htaccess</span></code> file within the
 document root of your Web server and add the following lines:</p>
@@ -392,6 +393,15 @@ to support HTTP/1.1.</dd>
 Please refer to <a class="reference internal" href="#trouble-webdav-label"><span>Troubleshooting WebDAV</span></a> above for troubleshooting steps.</dd>
 </dl>
 </div>
+</div>
+<div class="section" id="client-sync-stalls">
+<h2>Client Sync Stalls<a class="headerlink" href="#client-sync-stalls" title="Permalink to this headline">¶</a></h2>
+<p>One known reason is stray locks. These should expire automatically after an hour. If stray
+locks don&#8217;t expire (identified by e.g. repeated <code class="docutils literal"><span class="pre">file.txt</span> <span class="pre">is</span> <span class="pre">locked</span></code> and/or <code class="docutils literal"><span class="pre">Exception\\\\FileLocked</span></code>
+messages in your <code class="file docutils literal"><span class="pre">data/owncloud.log</span></code>), make sure that you are running system cron and
+not Ajax cron (See <a class="reference internal" href="../configuration_server/background_jobs_configuration.html"><em>Defining Background Jobs</em></a>).
+See <a class="reference external" href="https://github.com/owncloud/core/issues/22116">https://github.com/owncloud/core/issues/22116</a> and <a class="reference external" href="https://central.owncloud.org/t/file-is-locked-how-to-unlock/985">https://central.owncloud.org/t/file-is-locked-how-to-unlock/985</a>
+for some discussion and additional info of this issue.</p>
 </div>
 <div class="section" id="other-issues">
 <h2>Other issues<a class="headerlink" href="#other-issues" title="Permalink to this headline">¶</a></h2>

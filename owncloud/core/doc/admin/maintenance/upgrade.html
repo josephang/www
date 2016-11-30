@@ -80,6 +80,10 @@
 <li class="toctree-l2"><a class="reference internal" href="backup.html">Backing up ownCloud</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">How to Upgrade Your ownCloud Server</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#previous-owncloud-releases">Previous ownCloud Releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reverse-upgrade">Reverse Upgrade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#migration-test">Migration Test</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#encryption-migration-from-oc-7-0-to-8-0-and-8-0-to-8-1">Encryption migration from oC 7.0 to 8.0 and 8.0 to 8.1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#debian-migration-to-official-owncloud-packages">Debian Migration to Official ownCloud Packages</a></li>
 </ul>
@@ -147,6 +151,12 @@ repositories to maintain their ownCloud servers, rather than the Open Build
 Service. Please see <a class="reference internal" href="../enterprise_installation/linux_installation.html"><em>Installing &amp; Upgrading ownCloud Enterprise Edition</em></a> for
 more information.</li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When upgrading from oC 9.0 to 9.1 with existing Calendars or Adressbooks
+please have a look at the <a class="reference internal" href="../release_notes.html"><em>ownCloud 9.1 Release Notes</em></a> of oC 9.0 for important info
+about the needed migration steps during that upgrade.</p>
+</div>
 <p>When an update is available for your ownCloud server, you will see a
 notification at the top of your ownCloud Web interface. When you click the
 notification it brings you here, to this page.</p>
@@ -176,6 +186,67 @@ ownCloud release. Any apps that are not developed by ownCloud show a 3rd party
 designation. <strong>Install unsupported apps at your own risk</strong>. Then, before the
 upgrade, all 3rd party apps must be disabled. After the upgrade is complete you
 may re-enable them.</p>
+</div>
+<div class="section" id="previous-owncloud-releases">
+<h2>Previous ownCloud Releases<a class="headerlink" href="#previous-owncloud-releases" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ll find previous ownCloud releases in the <a class="reference external" href="https://owncloud.org/changelog/">ownCloud Server Changelog</a>.</p>
+</div>
+<div class="section" id="reverse-upgrade">
+<h2>Reverse Upgrade<a class="headerlink" href="#reverse-upgrade" title="Permalink to this headline">¶</a></h2>
+<p>If you need to reverse your upgrade, see <a class="reference internal" href="restore.html"><em>Restoring ownCloud</em></a>.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>When upgrading ownCloud and you are running MySQL or MariaDB with binary
+logging enabled, your upgrade may fail with these errors in your MySQL/MariaDB log:</p>
+<div class="highlight-python"><div class="highlight"><pre>An unhandled exception has been thrown:
+exception &#39;PDOException&#39; with message &#39;SQLSTATE[HY000]: General error: 1665
+Cannot execute statement: impossible to write to binary log since
+BINLOG_FORMAT = STATEMENT and at least one table uses a storage engine limited
+to row-based logging. InnoDB is limited to row-logging when transaction
+isolation level is READ COMMITTED or READ UNCOMMITTED.&#39;
+</pre></div>
+</div>
+<p>Please refer to <a class="reference internal" href="../configuration_database/linux_database_configuration.html#db-binlog-label"><span>MySQL / MariaDB with Binary Logging Enabled</span></a> on how to correctly configure your
+environment.</p>
+<p>Occasionally, <em>files do not show up after a upgrade</em>. A rescan of the files can
+help:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php console.php files:scan --all
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://owncloud.org/support">the owncloud.org support page</a> for further
+resources for both home and enterprise users.</p>
+<p>Sometimes, ownCloud can get <em>stuck in a upgrade</em>. This is usually due to the
+process taking too long and encountering a PHP time-out. Stop the upgrade
+process this way:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ maintenance:mode --off
+</pre></div>
+</div>
+<p>Then start the manual process:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ upgrade
+</pre></div>
+</div>
+<p>If this does not work properly, try the repair function:</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ maintenance:repair
+</pre></div>
+</div>
+</div>
+<div class="section" id="migration-test">
+<span id="migration-test-label"></span><h2>Migration Test<a class="headerlink" href="#migration-test" title="Permalink to this headline">¶</a></h2>
+<p>Before completing the upgrade, ownCloud first runs a simulation by copying all
+database tables to new tables, and then performs the upgrade on them, to ensure
+that the upgrade will complete correctly. The copied tables are deleted after
+the upgrade. This takes twice as much time, which on large installations can be
+many hours, so you can omit this step (by risking a failed upgrade) with the
+<code class="docutils literal"><span class="pre">--skip-migration-test</span></code> option, like this example on CentOS:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo -u apache php occ upgrade --skip-migration-test
+</pre></div>
+</div>
+<p>or this example on Ubuntu:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo -u www-data php occ upgrade --skip-migration-test
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../configuration_server/occ_command.html"><em>Using the occ Command</em></a> to learn more.</p>
 </div>
 <div class="section" id="encryption-migration-from-oc-7-0-to-8-0-and-8-0-to-8-1">
 <h2>Encryption migration from oC 7.0 to 8.0 and 8.0 to 8.1<a class="headerlink" href="#encryption-migration-from-oc-7-0-to-8-0-and-8-0-to-8-1" title="Permalink to this headline">¶</a></h2>

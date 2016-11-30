@@ -97,8 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="php_54_installation.html">Installing PHP 5.4 on RHEL 6 and CentOS 6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="php_55_installation.html">Installing PHP 5.5 on RHEL 7 and CentOS 7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selinux_configuration.html">SELinux Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nginx_examples.html">Nginx Example Configurations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nginx_owncloud_9x.html">Nginx Configuration for the ownCloud 9.x Branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx_examples.html">nginx Example Configurations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../configuration_server/index.html">ownCloud Server Configuration</a></li>
@@ -181,7 +180,7 @@ ownCloud. See <a class="reference internal" href="#selinux-tips-label"><span>SEL
 <p>The ownCloud .tar archive contains all of the required PHP modules. This section
 lists all required and optional PHP modules.  Consult the <a class="reference external" href="http://php.net/manual/en/extensions.php">PHP manual</a> for more information on modules.
 Your Linux distribution should have packages for all required modules. You can
-check the precense of a module by typing <code class="docutils literal"><span class="pre">php</span> <span class="pre">-m</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">-i</span> <span class="pre">&lt;module_name&gt;</span></code>.
+check the presence of a module by typing <code class="docutils literal"><span class="pre">php</span> <span class="pre">-m</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">-i</span> <span class="pre">&lt;module_name&gt;</span></code>.
 If you get a result, the module is present.</p>
 <p>Required:</p>
 <ul class="simple">
@@ -217,13 +216,19 @@ of non-ASCII characters)</li>
 <li>PHP module openssl (required for accessing HTTPS resources)</li>
 </ul>
 <p>Required for specific apps:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li>PHP module ldap (for LDAP integration)</li>
-<li>PHP module smbclient  (SMB/CIFS integration, see
-<a class="reference internal" href="../configuration_files/external_storage/smb.html"><em>SMB/CIFS</em></a>)</li>
 <li>PHP module ftp (for FTP storage / external user authentication)</li>
 <li>PHP module imap (for external user authentication)</li>
+<li>PHP module smbclient  (SMB/CIFS integration)</li>
 </ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">SMB/Windows Network Drive mounts require the PHP module smbclient; see
+<a class="reference internal" href="../configuration_files/external_storage/smb.html"><em>SMB/CIFS</em></a>.</p>
+</div>
 <p>Recommended for specific apps (<em>optional</em>):</p>
 <ul class="simple">
 <li>PHP module exif (for image rotation in pictures app)</li>
@@ -235,7 +240,7 @@ memcaches:</p>
 <li>PHP module apc</li>
 <li>PHP module apcu</li>
 <li>PHP module memcached</li>
-<li>PHP module redis (&gt;= 2.2.5, required for Transactional File Locking)</li>
+<li>PHP module redis (&gt;= 2.2.6+, required for Transactional File Locking)</li>
 </ul>
 <p>See <a class="reference internal" href="../configuration_server/caching_configuration.html"><em>Configuring Memory Caching</em></a> to learn how to select
 and configure a memcache.</p>
@@ -561,7 +566,7 @@ in the <code class="docutils literal"><span class="pre">owncloud/.user.ini</span
 </div>
 <div class="section" id="other-web-servers">
 <span id="other-http-servers-label"></span><h2>Other Web Servers<a class="headerlink" href="#other-web-servers" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference internal" href="nginx_examples.html"><em>Nginx Example Configurations</em></a></p>
+<p><a class="reference internal" href="nginx_examples.html"><em>nginx Example Configurations</em></a></p>
 <p><a class="reference external" href="https://github.com/owncloud/documentation/wiki/Alternate-Web-server-notes">Other HTTP servers</a></p>
 <p><a class="reference external" href="https://github.com/owncloud/documentation/wiki/UCS-Installation">Univention Corporate Server installation</a></p>
 </div>

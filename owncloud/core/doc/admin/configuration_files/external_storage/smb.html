@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../files_locking_transactional.html">Transactional File Locking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../previews_configuration.html">Previews Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../file_versioning.html">Controlling File Versions and Aging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trashbin_options.html">Managing the Trashbin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../configuration_database/index.html">Database Configuration</a></li>
@@ -140,12 +141,12 @@
 with the SMB/CIFS backend.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The SMB/CIFS backend requires <code class="docutils literal"><span class="pre">smbclient</span></code> or
-the PHP smbclient module to be installed on the ownCloud server. The PHP
-smbclient module is preferred, but either will work. These
-should be included in any Linux distribution. (See <a class="reference external" href="https://pecl.php.net/package/smbclient">PECL smbclient</a> if your distro does not include
-them.)</p>
+<p class="last">The SMB/CIFS backend requires the PHP smbclient module to be installed on the ownCloud server. This should be included in any Linux distribution; on Debian, Ubuntu, CentOS, and Fedora it is <code class="docutils literal"><span class="pre">php-smbclient</span></code>. See <a class="reference external" href="https://github.com/eduardok/libsmbclient-php">eduardok/libsmbclient-php</a> if your distribution does not include it; this provides source archives and instructions how to install binary packages.</p>
 </div>
+<p>You also need the Samba client installed on your Linux system. This is included in
+all Linux distributions; on Debian, Ubuntu, and other Debian derivatives this
+is <code class="docutils literal"><span class="pre">smbclient</span></code>. On SUSE, Red Hat, CentOS, and other Red Hat derivatives it is
+<code class="docutils literal"><span class="pre">samba-client</span></code>. You also need <code class="docutils literal"><span class="pre">which</span></code> and <code class="docutils literal"><span class="pre">stdbuf</span></code>, which should be included in most Linux distributions.</p>
 <p>You need the following information:</p>
 <ul class="simple">
 <li>Folder name for your local mountpoint.</li>

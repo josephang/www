@@ -93,9 +93,10 @@
 <li class="toctree-l3"><a class="reference internal" href="#libsmclient-issues">libsmclient Issues</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#smb-notifications">SMB Notifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#windows-network-drive-listener">Windows Network Drive Listener</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup-notifications-for-an-smb-share">Setup Notifications for an SMB Share</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#one-listener-for-many-shares">One Listener for Many Shares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-wnd-listener-as-a-service">Running the WND Listener as a Service</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="s3_swift_as_primary_object_store_configuration.html">Configuring S3 and OpenStack Swift Objects as Primary Storage</a></li>
@@ -159,9 +160,7 @@ only for the current session, which adds security.</p>
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>Enable the Windows Network Drive app on your ownCloud Apps page. Then there are
 a few dependencies to install.</p>
-<p>You must install the ownCloud <code class="docutils literal"><span class="pre">php5-libsmbclient</span></code> binary; please refer to the README in
-your <a class="reference external" href="https://customer.owncloud.com/">customer.owncloud.com</a> account for instructions
-on obtaining it.</p>
+<p>You must install <code class="docutils literal"><span class="pre">php-smbclient</span></code>. This should be included in most Linux distributions. See <a class="reference external" href="https://github.com/eduardok/libsmbclient-php">eduardok/libsmbclient-php</a> if your distribution does not include it; this provides source archives and instructions for installing binary packages.</p>
 <p>You also need the Samba client installed on your Linux system. This is included in
 all Linux distributions; on Debian, Ubuntu, and other Debian derivatives this
 is <code class="docutils literal"><span class="pre">smbclient</span></code>. On SUSE, Red Hat, CentOS, and other Red Hat derivatives it is
@@ -258,8 +257,8 @@ httpd_can_network_connect --&gt; off
 mounts.</p>
 </div>
 </div>
-<div class="section" id="smb-notifications">
-<h1>SMB Notifications<a class="headerlink" href="#smb-notifications" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="windows-network-drive-listener">
+<h1>Windows Network Drive Listener<a class="headerlink" href="#windows-network-drive-listener" title="Permalink to this headline">¶</a></h1>
 <p>The SMB protocol supports registering for notifications of file changes on remote Windows SMB storage servers. Notifications are more efficient than polling for changes, as polling requires scanning the whole SMB storage. ownCloud supports SMB notifications with an <code class="docutils literal"><span class="pre">occ</span></code> command, <code class="docutils literal"><span class="pre">occ</span> <span class="pre">wnd:listen</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -274,7 +273,7 @@ mounts.</p>
 <div class="highlight-python"><div class="highlight"><pre>sudo -u www-data php occ wnd:listen &lt;host&gt; &lt;share&gt; &lt;username&gt; [password]
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">host</span></code> is your remote SMB server. <code class="docutils literal"><span class="pre">share</span></code> is the share name, and <code class="docutils literal"><span class="pre">username</span></code> and <code class="docutils literal"><span class="pre">password</span></code> are the login credentials for the share. By default there is no output. Enable verbosity to see the notifications:</p>
+<p>The <code class="docutils literal"><span class="pre">host</span></code> is your remote SMB server, which must be exactly the same as the server name in your WND configuration on your ownCloud Admin page. <code class="docutils literal"><span class="pre">share</span></code> is the share name, and <code class="docutils literal"><span class="pre">username</span></code> and <code class="docutils literal"><span class="pre">password</span></code> are the login credentials for the share. By default there is no output. Enable verbosity to see the notifications:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ sudo -u www-data php occ wnd:listen -v server share useraccount
 Please enter the password to access the share:
 File removed : Capirotes/New Text Document.txt
@@ -318,6 +317,10 @@ and <code class="docutils literal"><span class="pre">/home/bob</span></code>. So
 </pre></div>
 </div>
 <p>Changes made by Bob or Alice made directly on the storage are now detected by the ownCloud server.</p>
+</div>
+<div class="section" id="running-the-wnd-listener-as-a-service">
+<h2>Running the WND Listener as a Service<a class="headerlink" href="#running-the-wnd-listener-as-a-service" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="https://github.com/owncloud/documentation/wiki/Configuring-wnd:listen-to-run-as-a-service">Configuring wnd:listen to run as a service</a> in the documentation wiki for tips on running the listenera as a service via cron, and by creating a Systemd startup script.</p>
 </div>
 </div>
 

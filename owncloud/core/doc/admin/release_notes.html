@@ -177,6 +177,9 @@ notifications API.</li>
 <li>Support for Internet Explorer below version 11 was dropped</li>
 <li>Symlinks pointing outside of the datadir are disallowed. Please use the <a class="reference internal" href="configuration_files/external_storage_configuration_gui.html"><em>Configuring External Storage (GUI)</em></a>
 with the <a class="reference internal" href="configuration_files/external_storage/local.html"><em>Local</em></a> storage backend instead.</li>
+<li>Removed <code class="docutils literal"><span class="pre">dav:migrate-calendars</span></code> and <code class="docutils literal"><span class="pre">dav:migrate-addressbooks</span></code> commands for <code class="docutils literal"><span class="pre">occ</span></code>.
+Users planning to upgrade from oC 9.0 or below to oC 9.1 needs to make sure that their
+Calendars and Adressbooks are correctly migrated <strong>before</strong> continuing to upgrade to 9.1.</li>
 </ul>
 <p><strong>Authentication</strong></p>
 <ul class="simple">
@@ -254,16 +257,24 @@ storages (new mount option in external storage admin page)</li>
 </ul>
 </div>
 <div class="section" id="changes-in-9-0">
-<h2>Changes in 9.0<a class="headerlink" href="#changes-in-9-0" title="Permalink to this headline">¶</a></h2>
+<span id="release-notes-label"></span><h2>Changes in 9.0<a class="headerlink" href="#changes-in-9-0" title="Permalink to this headline">¶</a></h2>
 <p>9.0 requires .ico files for favicons. This will change in 9.1, which will
 use .svg files. See <a class="reference external" href="https://doc.owncloud.org/server/9.0/developer_manual/core/theming.html#changing-favicon">Changing favicon</a> in the Developer Manual.</p>
 <p>Home folder rule is enforced in the user_ldap application in new ownCloud installations; see
 <a class="reference internal" href="configuration_user/user_auth_ldap.html"><em>User Authentication with LDAP</em></a>. This affects ownCloud 8.0.10, 8.1.5 and 8.2.0 and up.</p>
 <p>The Calendar and Contacts apps have been rewritten and the CalDAV and CardDAV backends of these
 apps were merged into ownCloud core. During the upgrade existing Calendars and Addressbooks
-are automatically migrated. As a fallback for failed upgrades or an option to test a migration
-<code class="docutils literal"><span class="pre">dav:migrate-calendars</span></code> and/or <code class="docutils literal"><span class="pre">dav:migrate-addressbooks</span></code> scripts are available via the
-<code class="docutils literal"><span class="pre">occ</span></code> command. See <a class="reference internal" href="configuration_server/occ_command.html"><em>Using the occ Command</em></a>.</p>
+are automatically migrated (except when using the the <code class="docutils literal"><span class="pre">IMAP</span> <span class="pre">user</span> <span class="pre">backend</span></code>). As a fallback
+for failed upgrades, when using the <code class="docutils literal"><span class="pre">IMAP</span> <span class="pre">user</span> <span class="pre">backend</span></code> or as an option to test a migration
+<code class="docutils literal"><span class="pre">dav:migrate-calendars</span></code> and/or <code class="docutils literal"><span class="pre">dav:migrate-addressbooks</span></code> scripts are available
+(<strong>only in oC 9.0</strong>) via the <code class="docutils literal"><span class="pre">occ</span></code> command. See <a class="reference internal" href="configuration_server/occ_command.html"><em>Using the occ Command</em></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">After upgrading to ownCloud 9.0 and <strong>before</strong> continuing to upgrade to 9.1 make sure
+that all of your and your users Calendars and Addressbooks are migrated correctly. Especially
+when using the <code class="docutils literal"><span class="pre">IMAP</span> <span class="pre">user</span> <span class="pre">backend</span></code> (other user backends might be also affected) you need to
+manually run the mentioned <code class="docutils literal"><span class="pre">occ</span></code> migration commands described above.</p>
+</div>
 <p>Updates on systems with large datasets will take longer, due to the addition of checksums to the
 oC database. See <a class="reference external" href="https://github.com/owncloud/core/issues/22747">https://github.com/owncloud/core/issues/22747</a>.</p>
 <p>Linux packages are available from our <a class="reference external" href="https://download.owncloud.org/download/repositories/stable/owncloud/">official download repository</a> .
@@ -506,13 +517,13 @@ search attributes are <code class="docutils literal"><span class="pre">givenName
 <h3>Protecting ownCloud on IIS from Data Loss<a class="headerlink" href="#protecting-owncloud-on-iis-from-data-loss" title="Permalink to this headline">¶</a></h3>
 <p>Under certain circumstances, running your ownCloud server on IIS could be at
 risk of data loss. To prevent this, follow these steps.</p>
-<p>In your ownCloud server configuration file, <code class="docutils literal"><span class="pre">owncloud\config\config.php</span></code>, set
-<code class="docutils literal"><span class="pre">config_is_read_only</span></code> to true.
-*
-Set the <code class="docutils literal"><span class="pre">config.php</span></code> file to read-only.
-*
-When you make server updates <code class="docutils literal"><span class="pre">config.php</span></code> must be made writeable. When your
-updates are completed re-set it to read-only.</p>
+<ul class="simple">
+<li>In your ownCloud server configuration file, <code class="docutils literal"><span class="pre">owncloud\config\config.php</span></code>, set
+<code class="docutils literal"><span class="pre">config_is_read_only</span></code> to true.</li>
+<li>Set the <code class="docutils literal"><span class="pre">config.php</span></code> file to read-only.</li>
+<li>When you make server updates <code class="docutils literal"><span class="pre">config.php</span></code> must be made writeable. When your
+updates are completed re-set it to read-only.</li>
+</ul>
 </div>
 <div class="section" id="antivirus-app-modes">
 <h3>Antivirus App Modes<a class="headerlink" href="#antivirus-app-modes" title="Permalink to this headline">¶</a></h3>

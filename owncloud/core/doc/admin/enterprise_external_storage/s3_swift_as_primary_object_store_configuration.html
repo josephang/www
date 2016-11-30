@@ -87,10 +87,11 @@
 <li class="toctree-l2"><a class="reference internal" href="ldap_home_connector_configuration.html">LDAP Home Connector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sharepoint-integration_configuration.html">Configuring SharePoint Integration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="windows-network-drive_configuration.html">Installing and Configuring the Windows Network Drive App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="windows-network-drive_configuration.html#smb-notifications">SMB Notifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="windows-network-drive_configuration.html#windows-network-drive-listener">Windows Network Drive Listener</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Configuring S3 and OpenStack Swift Objects as Primary Storage</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#implications">Implications</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#s3-multibucket-configuration">S3 Multibucket Configuration</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="jive_configuration.html">Jive Integration</a></li>
@@ -218,6 +219,26 @@ into the virtual filesystem. The class to be used is <code class="docutils liter
 ],
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="s3-multibucket-configuration">
+<h2>S3 Multibucket Configuration<a class="headerlink" href="#s3-multibucket-configuration" title="Permalink to this headline">¶</a></h2>
+<p>ownCloud 9.1+ has multibucket support for S3 object stores:</p>
+<div class="highlight-python"><div class="highlight"><pre>&#39;objectstore_multibucket&#39; =&gt; [
+   &#39;class&#39; =&gt; &#39;OCA\ObjectStore\S3&#39;,
+   &#39;arguments&#39; =&gt; [
+       &#39;autocreate&#39; =&gt; true,
+       &#39;options&#39; =&gt; [
+           &#39;version&#39; =&gt; &#39;2006-03-01&#39;,
+           &#39;region&#39;  =&gt; &#39;eu-central-1&#39;,
+           &#39;credentials&#39; =&gt; [
+               &#39;key&#39; =&gt; &#39;EJ39ITYZEUH5BGWDRUFY&#39;,
+               &#39;secret&#39; =&gt; &#39;M5MrXTRjkyMaxXPe2FRXMTfTfbKEnZCu+7uRTVSj&#39;,
+           ],
+       ],
+   ],
+],
+</pre></div>
 </div>
 <div class="section" id="openstack-swift">
 <h3>OpenStack Swift<a class="headerlink" href="#openstack-swift" title="Permalink to this headline">¶</a></h3>

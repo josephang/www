@@ -82,7 +82,6 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="">Upgrade ownCloud From Packages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#upgrade-quickstart">Upgrade Quickstart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#upgrade-tips">Upgrade Tips</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#migration-test">Migration Test</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-strong-directory-permissions">Setting Strong Directory Permissions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#upgrading-across-skipped-releases">Upgrading Across Skipped Releases</a></li>
 </ul>
@@ -129,33 +128,35 @@
 						
   <div class="section" id="upgrade-owncloud-from-packages">
 <h1>Upgrade ownCloud From Packages<a class="headerlink" href="#upgrade-owncloud-from-packages" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Starting with ownCloud 8.2 the Linux package repositories have
-changed, and <strong>you must configure your system to use these new
-repositories</strong> to install or upgrade ownCloud 8.2+. The new repositories are
-at our <a class="reference external" href="https://download.owncloud.org/download/repositories/stable/owncloud/">Open Build Service</a>.</p>
-</div>
 <div class="section" id="upgrade-quickstart">
 <h2>Upgrade Quickstart<a class="headerlink" href="#upgrade-quickstart" title="Permalink to this headline">¶</a></h2>
 <p>The best method for keeping ownCloud current on Linux servers is by configuring
 your system to use ownCloud&#8217;s <a class="reference external" href="https://download.owncloud.org/download/repositories/stable/owncloud/">Open Build Service</a> repository. Then stay
 current by using your Linux package manager to install fresh ownCloud packages.
 After installing upgraded packages you must run a few more steps to complete
-the
-upgrade. These are the basic steps to upgrading ownCloud:</p>
+the upgrade. These are the basic steps to upgrading ownCloud:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure that you don&#8217;t skip a major release when upgrading via repositories.
+For example you can&#8217;t upgrade from 8.1.x to 9.0.x directly as you would skip the 8.2.x
+major release. See <a class="reference internal" href="#skipped-release-upgrade-label"><span>Upgrading Across Skipped Releases</span></a> for more information.</p>
+</div>
 <ul class="simple">
-<li><a class="reference internal" href="../installation/apps_management_installation.html"><em>Disable</em></a> all third-party
-apps.</li>
+<li><a class="reference internal" href="../installation/apps_management_installation.html"><em>Disable</em></a> all third-party apps.</li>
 <li>Make a <a class="reference internal" href="backup.html"><em>fresh backup</em></a>.</li>
 <li>Upgrade your ownCloud packages.</li>
-<li>Run <a class="reference internal" href="../configuration_server/occ_command.html#command-line-upgrade-label"><span>occ upgrade</span></a> (optionally disabling the
-<a class="reference internal" href="#migration-test-label"><span>migration test</span></a>).</li>
-<li><a class="reference internal" href="../installation/installation_wizard.html#strong-perms-label"><span>Apply strong permissions</span></a> to your
-ownCloud directories.</li>
+<li>Run <a class="reference internal" href="../configuration_server/occ_command.html#command-line-upgrade-label"><span>occ upgrade</span></a> (Optionally disable the
+<a class="reference internal" href="upgrade.html#migration-test-label"><span>Migration Test</span></a> which might take a long time on large installations).</li>
+<li><a class="reference internal" href="../installation/installation_wizard.html#strong-perms-label"><span>Apply strong permissions</span></a> to your ownCloud directories.</li>
 <li>Take your ownCloud server out of <a class="reference internal" href="../configuration_server/occ_command.html#maintenance-commands-label"><span>maintenance mode</span></a>.</li>
 <li>Re-enable third-party apps.</li>
 </ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When upgrading from oC 9.0 to 9.1 with existing Calendars or Addressbooks
+please have a look at the <a class="reference internal" href="../release_notes.html#release-notes-label"><span>9.0 release notes</span></a> for
+important information about the needed migration steps during that upgrade.</p>
+</div>
 </div>
 <div class="section" id="upgrade-tips">
 <h2>Upgrade Tips<a class="headerlink" href="#upgrade-tips" title="Permalink to this headline">¶</a></h2>
@@ -196,41 +197,30 @@ user. This example is for Debian/Ubuntu:</p>
 <div class="highlight-python"><div class="highlight"><pre>sudo -u apache php occ upgrade
 </pre></div>
 </div>
-</div>
-<div class="section" id="migration-test">
-<span id="migration-test-label"></span><h2>Migration Test<a class="headerlink" href="#migration-test" title="Permalink to this headline">¶</a></h2>
-<p>Before completing the upgrade, ownCloud first runs a simulation by copying all
-database tables to new tables, and then performs the upgrade on them, to ensure
-that the upgrade will complete correctly. The copied tables are deleted after
-the upgrade. This takes twice as much time, which on large installations can be
-many hours, so you can omit this step with the <code class="docutils literal"><span class="pre">--skip-migration-test</span></code>
-option, like this example on CentOS:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ sudo -u apache php occ upgrade --skip-migration-test
-</pre></div>
-</div>
+<p>Optionally disable the <a class="reference internal" href="upgrade.html#migration-test-label"><span>Migration Test</span></a> which might take a
+long time on large installations.</p>
+<p>See <a class="reference internal" href="../configuration_server/occ_command.html"><em>Using the occ Command</em></a> to learn more.</p>
 </div>
 <div class="section" id="setting-strong-directory-permissions">
 <h2>Setting Strong Directory Permissions<a class="headerlink" href="#setting-strong-directory-permissions" title="Permalink to this headline">¶</a></h2>
 <p>After upgrading, verify that your ownCloud directory permissions are set
 according to <a class="reference internal" href="../installation/installation_wizard.html#strong-perms-label"><span>Setting Strong Directory Permissions</span></a>.</p>
-<p>If the upgrade fails, then you must try a manual upgrade.</p>
 </div>
 <div class="section" id="upgrading-across-skipped-releases">
 <span id="skipped-release-upgrade-label"></span><h2>Upgrading Across Skipped Releases<a class="headerlink" href="#upgrading-across-skipped-releases" title="Permalink to this headline">¶</a></h2>
-<p>It is best to update your ownCloud installation with every new point release,
-and to never skip any major releases. If you have skipped any major releases you
-can bring your ownCloud current with these steps:</p>
+<p>It is best to update your ownCloud installation with every new point release (e.g. 8.1.10),
+and to never skip any major release (e.g. don&#8217;t skip 8.2.x between 8.1.x and 9.0.x). If you
+have skipped any major release you can bring your ownCloud current with these steps:</p>
 <ol class="arabic simple">
-<li>Add the repository of your current version</li>
-<li>Upgrade your current version to the latest point release</li>
-<li>Add the repo of the next major release</li>
-<li>Upgrade your current version to the next major release</li>
-<li>Run upgrade routine</li>
-<li>Repeat from step 3 until you reach the last available major release</li>
+<li>Add the repository of your current version (e.g. 8.1.x)</li>
+<li>Upgrade your current version to the latest point release (e.g. 8.1.10) via your package manager</li>
+<li>Run the <code class="docutils literal"><span class="pre">occ</span> <span class="pre">upgrade</span></code> routine (see Upgrade Quickstart above)</li>
+<li>Add the repository of the next major release (e.g. 8.2.x)</li>
+<li>Upgrade your current version to the next major release (e.g. 8.2.8) via your package manager</li>
+<li>Run the <code class="docutils literal"><span class="pre">occ</span> <span class="pre">upgrade</span></code> routine (see Upgrade Quickstart above)</li>
+<li>Repeat from step 4 until you reach the last available major release (e.g. 9.1.x)</li>
 </ol>
-<p>You&#8217;ll find previous ownCloud releases in the <a class="reference external" href="https://owncloud.org/changelog/">ownCloud Server Changelog</a>.</p>
-<p>If upgrading via your package manager fails, then you must perform a
-<a class="reference internal" href="manual_upgrade.html"><em>Manual ownCloud Upgrade</em></a>.</p>
+<p>You&#8217;ll find repositories of previous ownCloud major releases in the <a class="reference external" href="https://owncloud.org/changelog/">ownCloud Server Changelog</a>.</p>
 </div>
 </div>
 

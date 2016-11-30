@@ -91,8 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="php_54_installation.html">Installing PHP 5.4 on RHEL 6 and CentOS 6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="php_55_installation.html">Installing PHP 5.5 on RHEL 7 and CentOS 7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selinux_configuration.html">SELinux Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nginx_examples.html">Nginx Example Configurations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nginx_owncloud_9x.html">Nginx Configuration for the ownCloud 9.x Branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nginx_examples.html">nginx Example Configurations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../configuration_server/index.html">ownCloud Server Configuration</a></li>
@@ -141,21 +140,21 @@
 This applies in particular to scenarios, where the Web server, storage and database are on separate machines.
 In this constellation, all dependencies and requirements are managed by the package management
 of your operating system, while the ownCloud code itself is maintained in a sequence of simple steps
-as documented in our instructions for the <a class="reference external" href="https://doc.owncloud.com/server/9.0/admin_manual/installation/source_installation.html">Manual Installation on Linux</a> and the <a class="reference external" href="https://doc.owncloud.com/server/9.0/admin_manual/maintenance/manual_upgrade.html">Manual ownCloud Upgrade</a>.</p>
+as documented in our instructions for the <a class="reference internal" href="source_installation.html"><em>Manual Installation on Linux</em></a> and the <a class="reference internal" href="../maintenance/manual_upgrade.html"><em>Manual ownCloud Upgrade</em></a>.</p>
 <p>The package installation is for single-server setups only.</p>
 <div class="section" id="changes-in-owncloud-9">
 <h2>Changes in ownCloud 9<a class="headerlink" href="#changes-in-owncloud-9" title="Permalink to this headline">¶</a></h2>
-<p>Linux distribution packages (from <a class="reference external" href="https://download.owncloud.org/download/repositories/9.0/owncloud/">Open Build Service</a>) have been divided into
-multiple packages for ownCloud 9: <code class="docutils literal"><span class="pre">owncloud-deps</span></code> and <code class="docutils literal"><span class="pre">owncloud-files</span></code>.</p>
+<p>Linux distribution packages (from <a class="reference external" href="https://download.owncloud.org/download/repositories/stable/owncloud/">Open Build Service</a>) have been divided into
+multiple packages for ownCloud 9: <code class="docutils literal"><span class="pre">owncloud</span></code>, <code class="docutils literal"><span class="pre">owncloud-deps</span></code> and <code class="docutils literal"><span class="pre">owncloud-files</span></code>.</p>
+<p>Install the metapackage <code class="docutils literal"><span class="pre">owncloud</span></code> to get a complete installation with all dependencies.</p>
 <p>The <code class="docutils literal"><span class="pre">owncloud-files</span></code> package installs only ownCloud, without Apache, database,
 or PHP dependencies.</p>
 <p>The <code class="docutils literal"><span class="pre">owncloud-deps</span></code> packages install all dependencies: Apache, PHP, and MySQL.
 <code class="docutils literal"><span class="pre">owncloud-deps</span></code> is not intended to be installed by itself, but rather is
 pulled in by the metapackage <code class="docutils literal"><span class="pre">owncloud</span></code>.</p>
-<p>Install the metapackage <code class="docutils literal"><span class="pre">owncloud</span></code> to get a complete installation with all dependencies.</p>
 <p><code class="docutils literal"><span class="pre">owncloud-files</span></code> is available for the following distributions, but not
-<code class="docutils literal"><span class="pre">owncloud-deps</span></code>.
-You will have to install your own LAMP stack first. This
+<code class="docutils literal"><span class="pre">owncloud-deps</span></code>.</p>
+<p>You will have to install your own LAMP stack first. This
 allows you to create your own custom LAMP stack without dependency conflicts
 with the ownCloud package. Browse
 <a class="reference external" href="http://download.owncloud.org/download/repositories/9.1/owncloud/">http://download.owncloud.org/download/repositories/9.1/owncloud/</a> to find

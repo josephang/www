@@ -85,6 +85,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#using-email-templates">Using Email Templates</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-mail-server-parameters-in-config-php">Setting Mail Server Parameters in config.php</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#send-a-test-email">Send a Test Email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-self-signed-certificates">Using Self-Signed Certificates</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#enabling-debug-mode">Enabling Debug Mode</a></li>
 </ul>
@@ -172,7 +173,7 @@ these include a <code class="docutils literal"><span class="pre">sendmail</span>
 <p>You need the following information from your mailserver administrator to
 connect ownCloud to a remote SMTP server:</p>
 <ul class="simple">
-<li>Encryption type: None, SSL, or TLS</li>
+<li>Encryption type: None, SSL/TLS or STARTTLS</li>
 <li>The From address you want your outgoing ownCloud mails to use</li>
 <li>Whether authentication is required</li>
 <li>Authentication method: None, Login, Plain, or NT LAN Manager</li>
@@ -298,10 +299,9 @@ used:</p>
 </div>
 <p>If the SMTP server only accepts secure connections you can choose between
 the following two variants:</p>
-<div class="section" id="ssl">
-<h4>SSL<a class="headerlink" href="#ssl" title="Permalink to this headline">¶</a></h4>
-<p>A secure connection will be initiated using the outdated SMTPS protocol
-which uses the port 465/tcp:</p>
+<div class="section" id="ssl-tls">
+<h4>SSL/TLS<a class="headerlink" href="#ssl-tls" title="Permalink to this headline">¶</a></h4>
+<p>A secure connection will be initiated using SSL/TLS via SMTPS on the default port 465/tcp:</p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;?php
 
   &quot;mail_smtphost&quot;     =&gt; &quot;smtp.server.dom:465&quot;,
@@ -309,16 +309,25 @@ which uses the port 465/tcp:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="tls">
-<h4>TLS<a class="headerlink" href="#tls" title="Permalink to this headline">¶</a></h4>
-<p>A secure connection will be initiated using the STARTTLS protocol which
-uses the default port 25/tcp:</p>
+<div class="section" id="starttls">
+<h4>STARTTLS<a class="headerlink" href="#starttls" title="Permalink to this headline">¶</a></h4>
+<p>A secure connection will be initiated using STARTTLS via SMTP on the default port 25/tcp:</p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;?php
 
   &quot;mail_smtphost&quot;     =&gt; &quot;smtp.server.dom&quot;,
   &quot;mail_smtpsecure&quot;   =&gt; &#39;tls&#39;,
 </pre></div>
 </div>
+<p>An alternative is the port 587/tcp (recommended):</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;?php
+
+  &quot;mail_smtphost&quot;     =&gt; &quot;smtp.server.dom:587&quot;,
+  &quot;mail_smtpsecure&quot;   =&gt; &#39;tls&#39;,
+</pre></div>
+</div>
+</div>
+<div class="section" id="authentication">
+<h4>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h4>
 <p>And finally it is necessary to configure if the SMTP server requires
 authentication, if not, the default values can be taken as is.</p>
 <div class="highlight-python"><div class="highlight"><pre>&lt;?php
@@ -409,6 +418,11 @@ be able to send email out of the box.</p>
 settings and then use the <strong>Send email</strong> button in the <em>Email Server</em> section
 of the Admin settings page.</p>
 </div>
+<div class="section" id="using-self-signed-certificates">
+<h2>Using Self-Signed Certificates<a class="headerlink" href="#using-self-signed-certificates" title="Permalink to this headline">¶</a></h2>
+<p>When using self-signed certificates on the remote SMTP server the certificate
+must be imported into ownCloud. Please refer to <a class="reference internal" href="import_ssl_cert.html"><em>Importing System-wide and Personal SSL Certificates</em></a> for more information.</p>
+</div>
 <div class="section" id="troubleshooting">
 <h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
 <p>If you are unable to send email, try turning on debugging. Do this by enabling
@@ -470,14 +484,13 @@ tcp    0      0    127.0.0.1:3306  0.0.0.0:*        LISTEN   1524/mysqld
 <li>25/tcp is unencrypted smtp</li>
 <li>110/tcp/udp is unencrypted pop3</li>
 <li>143/tcp/udp is unencrypted imap4</li>
-<li>465/tcp is encrypted ssmtp</li>
+<li>465/tcp is encrypted smtps</li>
 <li>993/tcp/udp is encrypted imaps</li>
 <li>995/tcp/udp is encrypted pop3s</li>
 </ul>
-<p><strong>Question</strong>: How can I determine if the SMTP server supports the outdated SMTPS
-protocol?</p>
-<p><strong>Answer</strong>: A good indication that the SMTP server supports the SMTPS protocol
-is that it is listening on port <strong>465</strong>.</p>
+<p><strong>Question</strong>: How can I determine if the SMTP server supports SMTPS?</p>
+<p><strong>Answer</strong>: A good indication that the SMTP server supports SMTPS is that it
+is listening on port <strong>465</strong>.</p>
 <p><strong>Question</strong>: How can I determine what authorization and encryption protocols
 the mail server supports?</p>
 <p><strong>Answer</strong>: SMTP servers usually announce the availability of STARTTLS

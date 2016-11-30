@@ -131,6 +131,12 @@ installation. It is useful for installations that do not have root access,
 such as shared hosting, for installations with a smaller number of users
 and data, and it automates updating
 <a class="reference internal" href="../installation/source_installation.html"><em>manual installations</em></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When upgrading from oC 9.0 to 9.1 with existing Calendars or Adressbooks
+please have a look at the <a class="reference internal" href="../release_notes.html"><em>ownCloud 9.1 Release Notes</em></a> of oC 9.0 for important info
+about the needed migration steps during that upgrade.</p>
+</div>
 <p>New in 9.0, the Updater app has <a class="reference internal" href="#updater-cli-label"><span>command-line options</span></a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -199,15 +205,8 @@ timeouts.</p>
 <div class="highlight-python"><div class="highlight"><pre>$ sudo -u www-data php occ upgrade
 </pre></div>
 </div>
-<p>Before completing the upgrade, ownCloud first runs a simulation by copying all
-database tables to new tables, and then performs the upgrade on them, to ensure
-that the upgrade will complete correctly. The copied tables are deleted after
-the upgrade. This takes twice as much time, which on large installations can be
-many hours, so you can omit this step with the <code class="docutils literal"><span class="pre">--skip-migration-test</span></code>
-option, like this example on Ubuntu:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ sudo -u www-data php occ upgrade --skip-migration-test
-</pre></div>
-</div>
+<p>Optionally disable the <a class="reference internal" href="upgrade.html#migration-test-label"><span>Migration Test</span></a> which might take a
+long time on large installations.</p>
 <p>See <a class="reference internal" href="../configuration_server/occ_command.html"><em>Using the occ Command</em></a> to learn more.</p>
 <ol class="arabic simple" start="8">
 <li>It runs for a few minutes, and when it is finished displays a success
