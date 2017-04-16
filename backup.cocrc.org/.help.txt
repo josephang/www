@@ -1,0 +1,11 @@
+Commands for youn jae
+
+mkdir -make directory
+nano -open text editor
+touch -create file
+cp filetobecopied endingfileandpath -copy file
+mv filetobemoved edingpath -move file or rename file
+wget link -download
+sudo su -switch to root (you can stop using sudo)
+
+
